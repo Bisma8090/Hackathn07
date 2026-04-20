@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -15,7 +16,7 @@ const bottomItems = [
   { src: '/icons/Setting.png', path: '/settings', label: 'Settings' },
 ];
 
-export default function Sidebar() {
+function SidebarInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -90,5 +91,13 @@ export default function Sidebar() {
         {bottomItems.map((item) => <NavIcon key={item.path} item={item} />)}
       </Box>
     </Box>
+  );
+}
+
+export default function Sidebar() {
+  return (
+    <Suspense fallback={null}>
+      <SidebarInner />
+    </Suspense>
   );
 }
