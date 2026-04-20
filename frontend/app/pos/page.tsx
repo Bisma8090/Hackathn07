@@ -298,40 +298,23 @@ export default function POSPage() {
       display: 'flex', alignItems: 'stretch',
       pointerEvents: 'none',
     }}>
-      {/* Dark overlay */}
+      {/* Dark overlay covering everything (sidebar + main content) except the panels */}
       <Box sx={{
         flex: 1, backdropFilter: 'blur(2px)', bgcolor: 'rgba(5,5,10,0.55)',
         pointerEvents: 'auto',
         cursor: 'pointer',
-        display: { xs: 'none', md: 'block' },
-      }} onClick={() => setShowConfirmation(false)} />
-
-      {/* Mobile: full screen overlay tap to close */}
-      <Box sx={{
-        display: { xs: 'block', md: 'none' },
-        position: 'fixed', inset: 0, zIndex: -1,
-        bgcolor: 'rgba(5,5,10,0.55)', backdropFilter: 'blur(2px)',
-        pointerEvents: 'auto',
       }} onClick={() => setShowConfirmation(false)} />
 
       {/* Confirmation Panel */}
       <Box sx={{
-        width: { xs: '100%', md: 420 }, flexShrink: 0, bgcolor: '#1F1D2B',
-        p: 2.5, flexDirection: 'column', overflow: 'hidden',
-        pointerEvents: 'auto',
-        borderLeft: { xs: 'none', md: '1px solid #2D3048' },
-        borderTopLeftRadius: { xs: 0, md: 16 },
-        borderBottomLeftRadius: { xs: 0, md: 16 },
-        maxWidth: { xs: '100vw', md: 420 },
-        position: { xs: 'fixed', md: 'relative' },
-        top: { xs: 0, md: 'auto' },
-        left: { xs: 0, md: 'auto' },
-        right: { xs: 0, md: 'auto' },
-        bottom: { xs: 0, md: 'auto' },
-        zIndex: { xs: 1, md: 'auto' },
-        display: { xs: 'none', md: 'flex' },
+        width: 420, flexShrink: 0, bgcolor: '#1F1D2B',
+        p: 2.5, display: 'flex', flexDirection: 'column', overflow: 'hidden',
+        pointerEvents: 'auto', 
+        borderLeft: '1px solid #2D3048',
+        borderTopLeftRadius: 16,
+        borderBottomLeftRadius: 16,
       }}>
-        <Box display="flex" alignItems="center" gap={1} mb={0.5}>
+        <Box display="flex" alignItems="center"  gap={1} mb={0.5}>
           <IconButton size="small" onClick={() => setShowConfirmation(false)} sx={{ color: 'white', p: 0.5 }}>
             <ArrowBackIcon fontSize="small" />
           </IconButton>
@@ -420,15 +403,10 @@ export default function POSPage() {
 
       {/* Payment Panel */}
       <Box sx={{
-        width: { xs: '100vw', md: 400 }, flexShrink: 0, bgcolor: '#1F1D2B',
+        width: 400, flexShrink: 0, bgcolor: '#1F1D2B',
         p: 2.5, display: 'flex', flexDirection: 'column', overflow: 'auto',
         pointerEvents: 'auto',
         borderLeft: '1px solid #2D3048',
-        position: { xs: 'fixed', md: 'relative' },
-        top: { xs: 0, md: 'auto' },
-        right: { xs: 0, md: 'auto' },
-        bottom: { xs: 0, md: 'auto' },
-        height: { xs: '100vh', md: 'auto' },
         '&::-webkit-scrollbar': { width: 4 },
         '&::-webkit-scrollbar-thumb': { bgcolor: '#3D4060', borderRadius: 2 },
       }}>
@@ -663,7 +641,7 @@ export default function POSPage() {
               {filtered.map((product: any) => {
                 const inStock = product.availableUnits == null || product.availableUnits > 0;
                 return (
-                  <Grid item key={product._id} xs={6} sm={4}
+                  <Grid item key={product._id} xs={4}
                     sx={{ overflow: 'visible' }}
                   >
                     <Card

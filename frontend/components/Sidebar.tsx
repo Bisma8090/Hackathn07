@@ -1,8 +1,12 @@
 'use client';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
+import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const navItems = [
   { src: '/icons/Home.png', path: '/pos', label: 'POS' },
@@ -20,6 +24,8 @@ function SidebarInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const isMobile = useMediaQuery('(max-width:768px)');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isActive = (item: typeof navItems[0]) => {
     const basePath = item.path.split('?')[0];
@@ -30,14 +36,14 @@ function SidebarInner() {
     return pathname.startsWith(basePath);
   };
 
-  const NavIcon = ({ item }: { item: typeof navItems[0] }) => {
+  const NavIcon = ({ item, onClick }: { item: typeof navItems[0]; onClick?: () => void }) => {
     const active = isActive(item);
     return (
       <Tooltip key={item.path} title={item.label} placement="right">
         <Box
-          onClick={() => router.push(item.path)}
+          onClick={() => { router.push(item.path); onClick?.(); }}
           sx={{
-            width: { xs: 36, sm: 44 }, height: { xs: 36, sm: 44 }, borderRadius: 2,
+            width: 44, height: 44, borderRadius: 2,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer',
             bgcolor: active ? 'rgba(234,124,105,0.18)' : 'transparent',
@@ -60,18 +66,16 @@ function SidebarInner() {
     );
   };
 
-  return (
+  const SidebarContent = ({ onNav }: { onNav?: () => void }) => (
     <Box sx={{
-      minHeight: '100vh', bgcolor: '#1F1D2B',
-      borderRight: '1px solid #2D3048', display: 'flex', flexDirection: 'column',
-      alignItems: 'center', py: 2, position: 'fixed', left: 0, top: 0, zIndex: 100,
-      width: { xs: 60, sm: 100 },
+      width: 72, minHeight: '100%', bgcolor: '#1F1D2B',
+      display: 'flex', flexDirection: 'column',
+      alignItems: 'center', py: 2,
     }}>
-      {/* Logo */}
       <Box
-        onClick={() => router.push('/dashboard')}
+        onClick={() => { router.push('/dashboard'); onNav?.(); }}
         sx={{
-          width: { xs: 36, sm: 44 }, height: { xs: 36, sm: 44 }, bgcolor: '#443229', borderRadius: 2,
+          width: 44, height: 44, bgcolor: '#443229', borderRadius: 2,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           mb: 3, cursor: 'pointer', overflow: 'hidden', flexShrink: 0,
         }}
@@ -81,16 +85,61 @@ function SidebarInner() {
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
         />
       </Box>
-
-      {/* Top nav icons */}
       <Box display="flex" flexDirection="column" alignItems="center" gap={1} flex={1}>
-        {navItems.map((item) => <NavIcon key={item.path} item={item} />)}
+        {navItems.map((item) => <NavIcon key={item.path} item={item} onClick={onNav} />)}
       </Box>
-
-      {/* Bottom settings icon */}
       <Box display="flex" flexDirection="column" alignItems="center" gap={1} mt={2}>
-        {bottomItems.map((item) => <NavIcon key={item.path} item={item} />)}
+        {bottomItems.map((item) => <NavIcon key={item.path} item={item} onClick={onNav} />)}
       </Box>
+    </Box>
+  );
+
+  if (isMobile) {
+    return (
+      <>
+        {/* Mobile top bar */}
+        <Box sx={{
+          position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
+          height: 56, bgcolor: '#1F1D2B', borderBottom: '1px solid #2D3048',
+          display: 'flex', alignItems: 'center', px: 2, gap: 2,
+        }}>
+          <IconButton onClick={() => setDrawerOpen(true)} sx={{ color: 'white', p: 0.5 }}>
+            <MenuIcon />
+          </IconButton>
+          <Box
+            onClick={() => router.push('/dashboard')}
+            sx={{
+              width: 36, height: 36, bgcolor: '#443229', borderRadius: 2,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', overflow: 'hidden',
+            }}
+          >
+            <img src="/icons/bx_bxs-store-alt.png" alt="logo"
+              style={{ width: 22, height: 22, objectFit: 'contain' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+            />
+          </Box>
+        </Box>
+
+        <Drawer
+          anchor="left"
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          PaperProps={{ sx: { bgcolor: 'transparent', boxShadow: 'none' } }}
+        >
+          <SidebarContent onNav={() => setDrawerOpen(false)} />
+        </Drawer>
+      </>
+    );
+  }
+
+  return (
+    <Box sx={{
+      width: 72, minHeight: '100vh', bgcolor: '#1F1D2B',
+      borderRight: '1px solid #2D3048',
+      position: 'fixed', left: 0, top: 0, zIndex: 100,
+    }}>
+      <SidebarContent />
     </Box>
   );
 }

@@ -57,7 +57,7 @@ function DashboardContent() {
   return (
     <AppLayout>
       <Box>
-        <Typography variant="h4" sx={{ fontWeight: 700, color: 'white' }}>Dashboard</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 700, color: 'white', fontSize: { xs: 22, sm: 28 } }}>Dashboard</Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>{today}</Typography>
 
         <Grid container spacing={3}>

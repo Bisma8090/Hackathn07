@@ -48,7 +48,8 @@ export default function OrdersPage() {
                 <CircularProgress sx={{ color: '#E8734A' }} />
               </Box>
             ) : (
-              <Table>
+              <Box sx={{ overflowX: 'auto' }}>
+                <Table sx={{ minWidth: 700 }}>
                 <TableHead>
                   <TableRow>
                     {['Order #', 'Customer', 'Items', 'Total', 'Type', 'Payment', 'Status', 'Date'].map((h) => (
@@ -127,7 +128,8 @@ export default function OrdersPage() {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+                </Table>
+              </Box>
             )}
           </CardContent>
         </Card>

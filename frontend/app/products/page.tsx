@@ -135,7 +135,7 @@ export default function ProductsPage() {
         </Box>
 
         {/* Category Tabs */}
-        <Box display="flex" gap={3} mb={3} sx={{ borderBottom: '1px solid #3D4060', pb: 1 }}>
+        <Box display="flex" gap={3} mb={3} sx={{ borderBottom: '1px solid #3D4060', pb: 1, overflowX: 'auto', '&::-webkit-scrollbar': { height: 0 } }}>
           {CATEGORIES.map((cat) => (
             <Typography
               key={cat}
@@ -147,6 +147,7 @@ export default function ProductsPage() {
                 borderBottom: activeCategory === cat ? '2px solid #E8734A' : '2px solid transparent',
                 pb: 0.5,
                 fontWeight: activeCategory === cat ? 600 : 400,
+                whiteSpace: 'nowrap',
               }}
             >
               {cat}

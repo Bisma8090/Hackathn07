@@ -123,7 +123,8 @@ export default function RawMaterialsPage() {
                 <CircularProgress sx={{ color: '#E8734A' }} />
               </Box>
             ) : (
-              <Table>
+              <Box sx={{ overflowX: 'auto' }}>
+                <Table sx={{ minWidth: 600 }}>
                 <TableHead>
                   <TableRow>
                     {['Name', 'Unit', 'Current Stock', 'Min Alert', 'Cost/Unit', 'Status', 'Actions'].map((h) => (
@@ -188,7 +189,8 @@ export default function RawMaterialsPage() {
                     );
                   })}
                 </TableBody>
-              </Table>
+                </Table>
+              </Box>
             )}
           </CardContent>
         </Card>

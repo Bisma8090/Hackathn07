@@ -114,10 +114,10 @@ function ProductsManagementContent() {
         <Button variant="outlined" sx={{ borderColor: '#3D4060', color: 'white' }}>Manage Categories</Button>
       </Box>
 
-      <Box display="flex" gap={3} mb={2} sx={{ borderBottom: '1px solid #3D4060', pb: 1 }}>
+      <Box display="flex" gap={3} mb={2} sx={{ borderBottom: '1px solid #3D4060', pb: 1, overflowX: 'auto', '&::-webkit-scrollbar': { height: 0 } }}>
         {CATEGORIES.map((cat) => (
           <Typography key={cat} variant="body2" onClick={() => setActiveCategory(cat)}
-            sx={{ cursor: 'pointer', color: activeCategory === cat ? '#E8734A' : '#9CA3AF', borderBottom: activeCategory === cat ? '2px solid #E8734A' : '2px solid transparent', pb: 0.5, fontWeight: activeCategory === cat ? 600 : 400 }}>
+            sx={{ cursor: 'pointer', color: activeCategory === cat ? '#E8734A' : '#9CA3AF', borderBottom: activeCategory === cat ? '2px solid #E8734A' : '2px solid transparent', pb: 0.5, fontWeight: activeCategory === cat ? 600 : 400, whiteSpace: 'nowrap' }}>
             {cat}
           </Typography>
         ))}
@@ -232,9 +232,9 @@ function SettingsContent() {
       <Typography variant="h4" fontWeight={700} color="white" mb={3}>
         Settings
       </Typography>
-      <Box display="flex" gap={2}>
+      <Box display="flex" gap={2} flexDirection={{ xs: 'column', md: 'row' }}>
         {/* Left Menu */}
-        <Card sx={{ bgcolor: '#1F1D2B', width: 260, flexShrink: 0 }}>
+        <Card sx={{ bgcolor: '#1F1D2B', width: { xs: '100%', md: 260 }, flexShrink: 0 }}>
           <List dense>
             {MENU_ITEMS.map((item) => (
               <ListItem
@@ -275,7 +275,7 @@ function SettingsContent() {
         </Card>
 
         {/* Right Content */}
-        <Card sx={{ bgcolor: '#1F1D2B', flex: 1 }}>
+        <Card sx={{ bgcolor: '#1F1D2B', flex: 1, minWidth: 0 }}>
           <CardContent>
             {active === 'Products Management' ? (
               <ProductsManagementContent />
