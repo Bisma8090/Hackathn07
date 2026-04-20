@@ -37,7 +37,7 @@ function SidebarInner() {
         <Box
           onClick={() => router.push(item.path)}
           sx={{
-            width: 44, height: 44, borderRadius: 2,
+            width: { xs: 36, sm: 44 }, height: { xs: 36, sm: 44 }, borderRadius: 2,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             cursor: 'pointer',
             bgcolor: active ? 'rgba(234,124,105,0.18)' : 'transparent',
@@ -62,15 +62,16 @@ function SidebarInner() {
 
   return (
     <Box sx={{
-      width: 100, minHeight: '100vh', bgcolor: '#1F1D2B',
+      minHeight: '100vh', bgcolor: '#1F1D2B',
       borderRight: '1px solid #2D3048', display: 'flex', flexDirection: 'column',
       alignItems: 'center', py: 2, position: 'fixed', left: 0, top: 0, zIndex: 100,
+      width: { xs: 60, sm: 100 },
     }}>
       {/* Logo */}
       <Box
         onClick={() => router.push('/dashboard')}
         sx={{
-          width: 44, height: 44, bgcolor: '#443229', borderRadius: 2,
+          width: { xs: 36, sm: 44 }, height: { xs: 36, sm: 44 }, bgcolor: '#443229', borderRadius: 2,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           mb: 3, cursor: 'pointer', overflow: 'hidden', flexShrink: 0,
         }}
