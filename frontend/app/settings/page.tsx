@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import AppLayout from '@/components/AppLayout';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -210,6 +211,14 @@ const MENU_ITEMS = [
 ];
 
 export default function SettingsPage() {
+  return (
+    <Suspense fallback={null}>
+      <SettingsContent />
+    </Suspense>
+  );
+}
+
+function SettingsContent() {
   const searchParams = useSearchParams();
   const [active, setActive] = useState('Products Management');
 

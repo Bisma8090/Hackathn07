@@ -1,5 +1,6 @@
 'use client';
 import dynamic from 'next/dynamic';
+import { Suspense } from 'react';
 import AppLayout from '@/components/AppLayout';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -24,7 +25,7 @@ const STATUS_COLORS: Record<string, string> = {
   Cancelled: '#F44336',
 };
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { data: stats, isLoading } = useGetDashboardStatsQuery(undefined, {
     pollingInterval: 10000,
   });
@@ -155,6 +156,14 @@ export default function DashboardPage() {
         </Grid>
       </Box>
     </AppLayout>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={null}>
+      <DashboardContent />
+    </Suspense>
   );
 }
 
